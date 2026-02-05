@@ -1003,7 +1003,7 @@ def main():
     parser.add_argument(
         '--batch-size',
         type=int,
-        default=100,
+        default=20,
         metavar='N',
         help='Number of emails to process per batch (default: 100, try lower values like 10-50 if hitting rate limits)'
     )
