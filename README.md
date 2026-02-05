@@ -1,4 +1,4 @@
-# Inbox Cleaner
+# Gmail Janitor
 
 A powerful Python tool to automatically scan your Gmail inbox, unsubscribe from marketing emails, and clean up thousands of old promotional messages. Features intelligent batch processing, automatic retries, progress caching, and exponential backoff to handle large mailboxes efficiently.
 
@@ -277,66 +277,6 @@ python inbox_cleaner.py --auto --recent-days 30
 
 ---
 
-## How It Works
-
-### Performance & Reliability
-
-**Batch Processing:**
-- Fetches 100 emails per API request (vs. 1 at a time)
-- Uses Gmail's native batch API for 50-100x speedup
-- Processes 50,000+ emails in minutes instead of hours
-
-**Smart Caching:**
-- Caches email metadata to `email_metadata_cache.json`
-- Saves progress every 10 batches (1,000 emails)
-- Subsequent runs use cache - near instant for unchanged emails
-- Survives crashes - maximum 900 email loss (1-2%)
-
-**Automatic Retry Logic:**
-- Detects rate limiting and backs off exponentially (1s → 16s)
-- Retries timeout errors up to 3 times per batch
-- Retry passes after main fetch (2 additional attempts)
-- Handles 50,000+ email mailboxes reliably
-
-**Search Strategy:**
-The script searches for marketing emails using multiple strategies:
-1. Gmail's Promotions category
-2. Emails with "unsubscribe" in headers or body
-3. Common marketing keywords (newsletter, promotional, etc.)
-4. Updates and notifications categories
-
-**Deduplication:**
-- Groups emails by sender domain (@company.com)
-- Consolidates marketing@, newsletter@, promo@ under one domain
-- Shows combined statistics and email count
-
-### Performance Examples
-
-**Typical performance for 50,000 email mailbox:**
-
-| Operation | Time | Notes |
-|-----------|------|-------|
-| First scan (no cache) | 2-5 min | Fetches all email metadata |
-| Subsequent scans (cached) | 5-10 sec | Uses local cache |
-| Cleanup mode | 3-8 min | Depends on selections |
-| Deletions (1,000 emails) | 10-20 sec | Batch deletion with backoff |
-
-**Progress tracking example:**
-```
-PHASE 2: Fetching email details
---------------------------------------------------
-  Found 6,234 emails in cache
-  Fetching 51,228 new emails...
-  Batch 512/513: 51200/57462 emails (89%)
-  ✓ Cache saved (51228 new emails added)
-
-Retry pass 1: 262 failed emails
-  Retry batch 3/3: 0 still failed
-✓ All emails recovered!
-```
-
----
-
 ## Troubleshooting
 
 ### Common Issues
@@ -515,28 +455,9 @@ A: Yes! Follow the same setup process.
 **Q: What happens if the script crashes?**
 A: Progress is auto-saved every 10 batches. Maximum loss: ~900 emails (1-2%).
 
----
-
-## Contributing
-
-Found a bug? Have a feature request?
-
-1. Check existing issues
-2. Open a new issue with details
-3. Include error messages and steps to reproduce
 
 ---
 
 ## License
 
 MIT License - Free to use and modify
-
----
-
-## Support
-
-- **Issues**: Open a GitHub issue
-- **Documentation**: This README
-- **Gmail API Docs**: https://developers.google.com/gmail/api
-
-**Happy cleaning! 🧹📧**
