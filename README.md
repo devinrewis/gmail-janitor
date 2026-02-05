@@ -4,7 +4,7 @@ A powerful Python tool to automatically scan your Gmail inbox, unsubscribe from 
 
 ## Features
 
-- 🚀 **Fast batch processing** - Fetches 100 emails per request with automatic retries
+- 🚀 **Fast batch processing** - Fetches 20 emails per request with automatic retries
 - 💾 **Smart caching** - Saves progress every 10 batches, survives crashes
 - 🔄 **Automatic retry logic** - Handles timeouts and rate limits gracefully
 - 📊 **Domain grouping** - Groups emails by sender domain (e.g., @company.com)
